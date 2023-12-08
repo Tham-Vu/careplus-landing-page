@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+    @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap");
+
+    :root {
+      --background-form-color: rgb(226, 246, 255);
+      --background-form-shadow: rgba(7, 41, 102, 0.3) 5px 15px 25px 0px;
+      --blue: rgb(49, 84, 162);
+      --button-background-color: rgb(242, 99, 34);
+      --font-family: Roboto;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-style: normal;
+      display: flex;
+      flex-direction: column;
+    }
+
+    p {
+      margin: 0px;
+    }
+
+    header {
+      margin: 16px 24px 0px 24px;
+      width: 100%;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    ul {
+      display: flex;
+      justify-content: center;
+      padding: 0px;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    a:hover {
+      font-size: 18px;
+      text-decoration: underline;
+    }
+
+    li {
+      list-style-type: none;
+      margin: 0px 10px 0px 5px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      /* justify-content: space-between; */
+      flex-grow: 1;
+    }
+
+    .nav-items {
+      display: flex;
+      column-gap: 40px;
+    }
+
+    .nav-toggle {
+      width: 24px;
+      height: 24px;
+      margin-left: 20px;
+      display: none;
+    }
+
+    .logo {
+      height: 57px;
+    }
+
+    nav {
+      flex-grow: 1;
+      margin: 0px 20px;
+    }
+
+    .consult-button {
+      width: 163.749px;
+      height: 34px;
+      color: white;
+      border-radius: 60px;
+      border-width: 0px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 24px;
+      background-color: var(--button-background-color);
+      animation: pulse 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .register-form-section {
+      display: flex;
+      flex-direction: column;
+      width: 420px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .banner-background {
+      background-size: 100%;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-origin: content-box;
+      background-position: 50% 0%;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-image: url(./assets/ctkm-bg-20231130091833-2pydf.png);
+    }
+
+    .register-form-banner {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 466px;
+      background-image: url(./assets/kham-qte_mb-20231201031023-0xm-v.png);
+      background-size: cover;
+    }
+
+    .register-form-container {
+      position: absolute;
+      bottom: -165px;
+      background: var(--background-form-color);
+      box-shadow: var(--background-form-shadow);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 370px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px 0px;
+    }
+
+    .register-form-title {
+      font-family: var(--font-family);
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      width: 315px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+    }
+
+    .input {
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: solid;
+      border-color: var(--blue);
+      color: black;
+      font-size: 14px;
+      padding: 5px 9px;
+    }
+
+    .register-button {
+      margin-top: 16px;
+      width: 100%;
+      height: 27px;
+      border-width: 0px;
+      border-radius: 25px;
+      background-color: var(--button-background-color);
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    .modal-container {
+      width: 100%;
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      z-index: 1400;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 520px;
+      /* height: 400px; */
+      border-radius: 20px;
+      background-color: var(--background-form-color);
+      box-shadow: var(--background-form-shadow);
+    }
+
+    .popup-enter-otp {
+      display: none;
+    }
+
+    .popup-success {
+      display: none;
+    }
+
+    .popup-success-container {
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      row-gap: 30px;
+    }
+
+    .popup-success p {
+      font-size: 32px;
+      color: var(--button-background-color);
+    }
+
+    .popup-container {
+      margin: 32px 38px;
+    }
+
+    .logo-graphic {
+      height: 62px;
+    }
+
+    .notification h4 {
+      margin: 1rem 0px;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 33px;
+      color: rgb(33, 34, 37);
+      text-align: left;
+    }
+
+    #phone,
+    #otp-code {
+      width: 416px;
+      height: 19px;
+      padding: 18.5px 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--blue);
+      color: black;
+    }
+
+    .warning,
+    .resend-otp-notification {
+      margin: 4px 0px;
+      font-size: 0.65625rem;
+      color: var(--button-background-color);
+      display: none;
+    }
+
+    .wrong-otp-warning {
+      font-size: 16px;
+    }
+
+    .resend-otp-notification {
+      display: block;
+      font-size: 14px;
+    }
+
+    .policy-notification {
+      margin-top: 24px;
+      font-size: 16px;
+      line-height: 22px;
+      color: rgb(38, 40, 52);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .popup-form-button-group {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .popup-form-btn {
+      background-color: var(--button-background-color);
+      width: 80px;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .cancel-button,
+    .continue-button,
+    .send-button {
+      cursor: pointer;
+    }
+
+    .cancel-button {
+      background-color: white;
+      border: 1px solid var(--button-background-color);
+      color: var(--button-background-color);
+    }
+  </style>
+</head>
+
+<body>
+<header>
+    <div class="logo-container">
+        <img th:src="@{/assets/careplus-logo-2x-20201001040102.png}" alt="Logo" class="logo" />
+    </div>
+    <div class="nav-container">
+        <nav>
+            <ul class="nav-items">
+                <li class="services"><a href="">GÓI KHÁM</a></li>
+                <li class="doctors"><a href="">BÁC SĨ</a></li>
+                <li class="address"><a href="">ĐỊA CHỈ</a></li>
+                <li class="feedback"><a href="">PHẢN HỒI</a></li>
+            </ul>
+        </nav>
+        <button class="consult-button" id="consult-button" onclick="togglePopup()">
+            TƯ VẤN NGAY
+        </button>
+        <div class="nav-toggle">
+            <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                 xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" x="0px" y="0px"
+                 viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%" class="" fill="rgba(0, 0, 0, 1)">
+                <g transform="translate(0,-952.36218)">
+                    <path style="
+                  text-indent: 0;
+                  text-transform: none;
+                  direction: ltr;
+                  block-progression: tb;
+                  baseline-shift: baseline;
+                  color: #000000;
+                  enable-background: accumulate;
+                "
+                          d="m 17.29343,976.00469 a 3.0040663,3.0040663 0 1 0 0.3125,6 l 64.90625,0 a 3.0003,3.0003 0 1 0 0,-6 l -64.90625,0 a 3.0003,3.0003 0 0 0 -0.3125,0 z m 0,23.375 a 3.0040663,3.0040663 0 1 0 0.3125,6.00001 l 64.90625,0 a 3.0003,3.0003 0 1 0 0,-6.00001 l -64.90625,0 a 3.0003,3.0003 0 0 0 -0.3125,0 z m 0.3125,23.34371 a 3.0003,3.0003 0 1 0 0,6 l 64.90625,0 a 3.0003,3.0003 0 1 0 0,-6 l -64.90625,0 z"
+                          fill-opacity="1" fill-rule="nonzero" stroke="none" marker="none" visibility="visible" display="inline"
+                          overflow="visible"></path>
+                </g>
+            </svg>
+        </div>
+    </div>
+</header>
+<section class="register-form-section">
+    <div class="banner-background"></div>
+    <div class="register-form-banner"></div>
+    <div class="register-form-container">
+        <div class="register-form-title">
+            <p>Đăng ký</p>
+        </div>
+        <div class="form-container">
+            <form action="submit">
+                <input class="input" required type="text" name="input-name" id="input-name" placeholder="Tên*" />
+                <input class="input" required type="number" name="input-phone" id="input-phone"
+                       placeholder="Số điện thoại*" />
+                <input class="input" type="text" name="input-service" id="input-service" placeholder="Dịch vụ quan tâm" />
+            </form>
+            <button class="register-button" type="submit" onclick="registerNow()">ĐĂNG KÝ NGAY</button>
+            <p style="margin-left: auto; margin-right: auto; font-style: italic">
+                (*)Cam kết bảo mật thông tin.
+            </p>
+        </div>
+    </div>
+</section>
+<div class="modal-container" id="modal-container">
+    <div class="overlay" id="overlay" onclick="offModal()"></div>
+    <div class="popup popup-enter-phone" id="popup-enter-phone">
+        <div class="popup-container">
+            <div class="phone-graphic-header">
+                <img class="logo-graphic" th:src="@{/assets/careplus-logo-2x-20201001040102.png}" alt="phone" />
+                <div class="notification">
+                    <h4>Vui lòng nhập số điện thoại để xác thực và đăng ký</h4>
+                </div>
+            </div>
+            <div class="phone-input-container">
+                    <input required type="text" name="phoneNumber" id="phone" placeholder="Số điện thoại của bạn" aria-invalid="true"
+                           inputmode="numeric" pattern="[0-9]*" value />
+                <p class="warning invalid-phone-warning" id="invalid-phone-warning">Vui lòng nhập số điện thoại</p>
+            </div>
+            <div class="policy-notification">
+          <span class="policy">Bằng việc nhập số điện thoại, bạn xác nhận đồng ý và hiểu rõ về
+            <a class="term-of -serviec">Điều khoản sử dụng dịch vụ</a> và
+            <a class="conditions">Điều kiện điều khoản về bảo vệ dữ liệu cá nhân</a>
+            của chúng tôi.</span>
+            </div>
+            <div class="popup-form-button-group">
+                <buton class="popup-form-btn cancel-button" id="phone-cancel-button" onclick="cancel()">Huỷ</buton>
+                <buton class="popup-form-btn continue-button" id="phone-continue-button" onclick="startVerification()">Tiếp theo</buton>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-enter-otp" id="popup-enter-otp">
+        <div class="popup-container">
+            <div class="phone-graphic-header">
+                <img class="logo-graphic" th:src="@{/assets/careplus-logo-2x-20201001040102.png}" alt="phone" />
+                <div class="notification">
+                    <h4>Vui lòng nhập mã OTP được gửi vào số điện thoại</h4>
+                </div>
+            </div>
+            <div class="phone-input-container">
+                <p class="warning wrong-otp-warning" id="wrong-otp-warning">Mã OTP không đúng. Vui lòng nhập lại!</p>
+                    <input required type="text" name="otpCode" id="otp-code" placeholder="Mã OTP" aria-invalid="true"
+                           inputmode="numeric" pattern="[0-9]*" value />
+                <p class="warning invalid-otp-warning">Vui lòng nhập mã OTP</p>
+                <p class="resend-otp-notification">
+                    Không nhận được mã. <b style="cursor: pointer;" onclick="resendOTP()">Gửi lại</b>
+                </p>
+                <div class="popup-form-button-group">
+                    <buton class="popup-form-btn cancel-button" id="otp-cancel-button" onclick="cancel()">Huỷ</buton>
+                    <buton class="popup-form-btn send-button" id="otp-send-button" onclick="checkOTP(event)">Gửi</buton>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-success" id="popup-success">
+        <div class="popup-success-container">
+            <img th:src="@{/assets/careplus-logo-2x-20201001040102.png}" alt="">
+            <p>Đăng ký thành công</p>
+        </div>
+    </div>
+</div>
+<script lang="javascript">
+    let otpCode;
+    let phoneInputForm = document.getElementById("phone");
+    let otpCodeInput = document.getElementById("otp-code");
+    window.addEventListener('DOMContentLoaded', function () {
+      var myElement = document.getElementById('modal-container');
+      var pageHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+      myElement.style.height = pageHeight + 'px';
+    });
+    phone.addEventListener("input", function () {
+      document.getElementById("invalid-phone-warning").style.display = 'none';
+    })
+    otpCodeInput.addEventListener("input", function () {
+      document.getElementById("wrong-otp-warning").style.display = 'none';
+    })
+    function offModal() {
+      document.getElementById('modal-container').style.display = 'none';
+    }
+    function togglePopup() {
+        console.log("isClick");
+        phoneInputForm.value = '';
+        otpCodeInput.value = '';
+        document.getElementById('modal-container').style.display = 'block';
+        document.getElementById('popup-enter-phone').style.display = 'block';
+        document.getElementById('popup-enter-otp').style.display = 'none';
+        document.getElementById("popup-success").style.display = 'none';
+    }
+
+<!--    băt đầu gửi mã OTP-->
+    function startVerification() {
+      let phoneInput = document.getElementById("phone").value;
+      if (phoneInput !== '') {
+        otpCode = createOTP();
+        sendOTP(phoneInput,otpCode);
+        document.getElementById("popup-enter-phone").style.display = 'none';
+        document.getElementById("popup-enter-otp").style.display = 'block';
+        console.log(otpCode)
+      } else {
+        document.getElementById("invalid-phone-warning").style.display = 'block';
+      }
+      return otpCode;
+    }
+
+<!--    Tạo mã OTP ngẫu nhiên -->
+    function createOTP() {
+      let randomNumber = Math.floor(Math.random() * 1000000);
+      let randomOTP = randomNumber.toString().padStart(6, '0');
+      return randomOTP;
+    }
+
+<!--    Gưi mã OTP đến phoneNum-->
+    function sendOTP(phoneNumber, otpCode){
+        console.log('Mã OTP đã được gửi đến số điện thoại ' + phoneNumber);
+    }
+
+<!--    Kiểm tra mã OTP-->
+    function checkOTP(event) {
+        let phoneInput;
+        let buttonId = event.target.id;
+        console.log(buttonId);
+        phoneInput = document.getElementById("phone").value;
+        checkAndSaveOTP(phoneInput);
+    }
+    function checkAndSaveOTP(phoneNumber){
+        let otpInput = document.getElementById("otp-code").value;
+<!--        let user;-->
+<!--        if (isHomePage === 'true') {-->
+<!--            let nameInput = document.getElementById("input-name").value;-->
+<!--            let serviceInput = document.getElementById("input-service").value;-->
+<!--            user = {-->
+<!--                name: nameInput,-->
+<!--                phone: phoneNumber,-->
+<!--                otpCode: otpCode,-->
+<!--                services: serviceInput-->
+<!--            }-->
+<!--        } else if(isHomePage === 'false'){-->
+            let user = {
+                phone: phoneNumber,
+                otpCode: otpCode,
+            }
+            console.log(user);
+<!--        }-->
+        if (otpInput === otpCode) {
+        saveUserData(user);
+        document.getElementById("popup-success").style.display = 'block';
+        document.getElementById("popup-enter-otp").style.display = 'none';
+        } else {
+          document.getElementById("wrong-otp-warning").style.display = 'block';
+          document.getElementById('otp-code').value = '';
+        }
+     }
+<!--    Lưu dữ liệu vào database-->
+    function saveUserData(data){
+        fetch('http://localhost:8080/create-user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('Dữ liệu đã được lưu vào cơ sở dữ liệu');
+            } else {
+              console.log('Có lỗi xảy ra khi gửi dữ liệu');
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi:', error);
+          });
+    }
+    function registerNow(){
+        let nameInput = document.getElementById("input-name").value;
+        let phoneInput = document.getElementById("input-phone").value;
+        let serviceInput = document.getElementById("input-service").value;
+        if (phoneInput !== '') {
+            otpCode = createOTP();
+            console.log(otpCode);
+            sendOTP(phoneInput,otpCode);
+            document.getElementById("modal-container").style.display = 'block';
+            document.getElementById("popup-enter-phone").style.display = 'none';
+            document.getElementById("popup-enter-otp").style.display = 'block';
+        }
+    }
+<!--    Resend-->
+    function resendOTP() {
+    let phoneInput = document.getElementById("phone").value;
+      otpCode = createOTP();
+      sendOTP(phoneInput, otpCode);
+    }
+<!--    Cancel-->
+    function cancel(){
+      document.getElementById("modal-container").style.display= "none";
+    }
+  </script>
+</body>
+
+</html>
