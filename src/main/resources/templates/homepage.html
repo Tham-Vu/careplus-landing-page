@@ -589,9 +589,11 @@
             otpCode = createOTP();
             console.log(otpCode);
             sendOTP(phoneInput,otpCode);
+            otpCodeInput.value = '';
             document.getElementById("modal-container").style.display = 'block';
             document.getElementById("popup-enter-phone").style.display = 'none';
             document.getElementById("popup-enter-otp").style.display = 'block';
+            document.getElementById("popup-success").style.display = 'none';
         }
     }
 <!--    Resend-->
